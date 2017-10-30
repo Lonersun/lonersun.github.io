@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>MongoDb索引使用一常用命令 | Lonersun-生命如花，如此灿烂！</title>
+  <meta name="description" content="本文将以集合order为例，列举常用的索引命令。 1. 查看索引：1.1 查看集合中的索引：1$ db.COLLECTION_NAME.getIndexes() 例：获取集合order的索引: 123456789101112$ db.order.getIndexes()[	&amp;#123;		&quot;v&quot; : 1,		&quot;key&quot; : &amp;#123;			&quot;_id&quot; : 1		&amp;#125;,		&quot;name&quot; :">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDb索引使用一常用命令">
+<meta property="og:url" content="https://blog.lonersun.com/2017/10/12/MongoDb索引使用一常用命令/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文将以集合order为例，列举常用的索引命令。 1. 查看索引：1.1 查看集合中的索引：1$ db.COLLECTION_NAME.getIndexes() 例：获取集合order的索引: 123456789101112$ db.order.getIndexes()[	&amp;#123;		&quot;v&quot; : 1,		&quot;key&quot; : &amp;#123;			&quot;_id&quot; : 1		&amp;#125;,		&quot;name&quot; :">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-21T11:34:15.870Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDb索引使用一常用命令">
+<meta name="twitter:description" content="本文将以集合order为例，列举常用的索引命令。 1. 查看索引：1.1 查看集合中的索引：1$ db.COLLECTION_NAME.getIndexes() 例：获取集合order的索引: 123456789101112$ db.order.getIndexes()[	&amp;#123;		&quot;v&quot; : 1,		&quot;key&quot; : &amp;#123;			&quot;_id&quot; : 1		&amp;#125;,		&quot;name&quot; :">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.lonersun.com/2017/10/12/MongoDb索引使用一常用命令/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/avatar.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Lonersun" target="_blank">
+          <img class="thumb-xl img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Lonersun</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">生命如花，如此灿烂！</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="fa fa-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <!-- <span class="ins-close ins-selectable"><i class="fa fa-times"></i></span> -->
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="fa fa-fw fa-dashboard"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="fa fa-fw fa-delicious"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="fa fa-fw fa-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="fa fa-fw fa-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="fa fa-fw fa-code"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="fa fa-fw fa-leanpub"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="fa fa-fw fa-gg"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="fa fa-fw fa-coffee"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Lonersun" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="fa fa-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/anywnangel" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="fa fa-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/Lonersun" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="fa fa-twitter"></i></a></li>
+        
+        <li><a href="https://www.facebook.com/lonersun83" target="_blank" title="Facebook" data-toggle=tooltip data-placement=top><i class="fa fa-facebook"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="fa fa-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            
+            <p>您好，您是第<span id="busuanzi_value_site_uv">0</span>位访客</p>
+            
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2017/10/27/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-10-27T09:26:05.047Z" itemprop="datePublished">2017-10-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2017/10/21/将自己的Python代码打包放到PyPI上/" class="title">将自己的Python代码打包放到PyPI上</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-10-21T11:36:08.000Z" itemprop="datePublished">2017-10-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2017/10/12/MongoDb索引使用一常用命令/" class="title">MongoDb索引使用一常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-10-12T12:03:07.000Z" itemprop="datePublished">2017-10-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-MongoDb索引使用一常用命令" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDb索引使用一常用命令
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="fa fa-calendar-check-o"></i>
+	<a href="/2017/10/12/MongoDb索引使用一常用命令/" class="article-date">
+	  <time datetime="2017-10-12T12:03:07.000Z" itemprop="datePublished">2017-10-12</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="fa fa-eye" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			阅读<span id="busuanzi_value_page_pv">0</span>次
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="fa fa-commenting-o"></i> <a href="/2017/10/12/MongoDb索引使用一常用命令/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+      
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p><strong>本文将以集合order为例，列举常用的索引命令。</strong></p>
+<h2 id="1-查看索引："><a href="#1-查看索引：" class="headerlink" title="1. 查看索引："></a>1. 查看索引：</h2><h3 id="1-1-查看集合中的索引："><a href="#1-1-查看集合中的索引：" class="headerlink" title="1.1 查看集合中的索引："></a>1.1 查看集合中的索引：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.COLLECTION_NAME.getIndexes()</div></pre></td></tr></table></figure>
+<p><em>例：获取集合order的索引:</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$ db.order.getIndexes()</div><div class="line">[</div><div class="line">	&#123;</div><div class="line">		<span class="string">"v"</span> : 1,</div><div class="line">		<span class="string">"key"</span> : &#123;</div><div class="line">			<span class="string">"_id"</span> : 1</div><div class="line">		&#125;,</div><div class="line">		<span class="string">"name"</span> : <span class="string">"_id_"</span>,</div><div class="line">		<span class="string">"ns"</span> : <span class="string">"snack.order"</span></div><div class="line">	&#125;</div><div class="line">]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>我们可以看到Mongo自动创建了一条名为<em>id</em>的索引;</p>
+</li>
+<li><p>_id索引：是绝大多数集合默认建立的索引，对于每个插入的数据，MongoDB都会自动生成一条唯一的_id字段</p>
+</li>
+</ul>
+<h3 id="1-2-查看集合中的索引大小"><a href="#1-2-查看集合中的索引大小" class="headerlink" title="1.2 查看集合中的索引大小:"></a>1.2 查看集合中的索引大小:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.COLLECTION_NAME.totalIndexSize()</div></pre></td></tr></table></figure>
+<p><em>例：获取集合order索引的大小</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ db.order.totalIndexSize()</div><div class="line">16834560</div></pre></td></tr></table></figure>
+<h2 id="2-创建索引："><a href="#2-创建索引：" class="headerlink" title="2. 创建索引："></a>2. 创建索引：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.COLLECTION_NAME.ensureIndex(keys[,options])</div></pre></td></tr></table></figure>
+<h3 id="2-1-普通索引"><a href="#2-1-普通索引" class="headerlink" title="2.1 普通索引:"></a>2.1 普通索引:</h3><p><strong>为集合中的某个字段创建索引</strong></p>
+<p><em>例：为order创建key为state顺序为倒序的索引（其中1：生序，-1：降序）</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ db.order.ensureIndex(&#123;<span class="string">"state"</span>:-1&#125;)</div><div class="line">&#123;</div><div class="line">	<span class="string">"createdCollectionAutomatically"</span> : <span class="literal">false</span>,</div><div class="line">	<span class="string">"numIndexesBefore"</span> : 1,</div><div class="line">	<span class="string">"numIndexesAfter"</span> : 2,</div><div class="line">	<span class="string">"ok"</span> : 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-2-复合索引："><a href="#2-2-复合索引：" class="headerlink" title="2.2 复合索引："></a>2.2 复合索引：</h3><p><strong>为多个字段联合创建索引</strong></p>
+<p><em>例：为order创建state、shop_id 均为倒序的复合索引</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ db.order.ensureIndex(&#123;<span class="string">"state"</span>:-1, <span class="string">"shop_id"</span>:-1&#125;)</div><div class="line">&#123;</div><div class="line">	<span class="string">"createdCollectionAutomatically"</span> : <span class="literal">false</span>,</div><div class="line">	<span class="string">"numIndexesBefore"</span> : 2,</div><div class="line">	<span class="string">"numIndexesAfter"</span> : 3,</div><div class="line">	<span class="string">"ok"</span> : 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-3-文档索引："><a href="#2-3-文档索引：" class="headerlink" title="2.3 文档索引："></a>2.3 文档索引：</h3><p><strong>MongoDB可以为一个或多个字段创建索引，当字段是子文档时，同样可以创建索引。</strong></p>
+<p><em>例：address集合中存在这样的数据</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"_id"</span> : ObjectId(<span class="string">"59a617a6b8d224d74a26ee5f"</span>),</div><div class="line">    <span class="string">"city_name"</span> : <span class="string">"北京市"</span>,</div><div class="line">    <span class="string">"bd_poi"</span> : [</div><div class="line">        116.391036665036,</div><div class="line">        40.0055065248079</div><div class="line">    ],</div><div class="line">    <span class="string">"address"</span> : <span class="string">"北京市朝阳区大屯路风林绿洲21号楼3单元207室"</span>,</div><div class="line">    <span class="string">"area_info"</span> : &#123;</div><div class="line">        <span class="string">"area_id"</span> : <span class="string">"599ea10499826905c38f924a"</span>,</div><div class="line">        <span class="string">"area_name"</span> : <span class="string">"亚运村"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以为子文档创建如下索引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.address.ensureIndex(&#123;<span class="string">"area_info"</span>:1&#125;)</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong>查询时子文档的字段顺序要和查询顺序保持一致，否则不会命中索引</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 会命中索引</span></div><div class="line">db.address.find(&#123;area_info:&#123;area_id:<span class="string">"599ea10499826905c38f924a"</span>, area_name:<span class="string">"亚运村"</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="comment"># 不会命中索引</span></div><div class="line">db.address.find(&#123;area_info:&#123;area_name:<span class="string">"亚运村"</span>,area_id:<span class="string">"599ea10499826905c38f924a"</span>&#125;&#125;)</div></pre></td></tr></table></figure>
+<h3 id="2-4-唯一索引"><a href="#2-4-唯一索引" class="headerlink" title="2.4 唯一索引"></a>2.4 唯一索引</h3><p><strong>unique: 建立的索引是否唯一。指定为true创建唯一索引。默认值为false。</strong></p>
+<p><em>例：为商家订单ID(org_order_id)创建唯一索引</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.ensureIndex(&#123;<span class="string">"org_order_id"</span>:-1&#125;, &#123;<span class="string">"unique"</span>:<span class="literal">true</span>&#125;)</div></pre></td></tr></table></figure>
+<p><strong>dropDups: 在建立唯一索引时是否删除重复记录,指定 true 创建唯一索引。默认值为 false。</strong></p>
+<p><em>例：为商家订单ID(org_order_id)创建唯一索引,并且删除重复记录</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.ensureIndex(&#123;<span class="string">"org_order_id"</span>:-1&#125;, &#123;<span class="string">"unique"</span>:<span class="literal">true</span>, <span class="string">"dropDups"</span>: <span class="literal">true</span>&#125;)</div></pre></td></tr></table></figure>
+<h3 id="2-5-过期索引"><a href="#2-5-过期索引" class="headerlink" title="2.5 过期索引"></a>2.5 过期索引</h3><p><strong>在一段时间后会过期的索引，在索引过期后，相应的数据会被删除，适用于 用户登陆信息，日志</strong></p>
+<p><em>例：为集合log创建过期索引，过期时间为10s</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建索引</span></div><div class="line">$ db.log.ensureIndex(&#123;<span class="string">"time"</span>:1&#125;, &#123;expireAfterSeconds:10&#125;)</div><div class="line">&#123;</div><div class="line">	<span class="string">"createdCollectionAutomatically"</span> : <span class="literal">true</span>,</div><div class="line">	<span class="string">"numIndexesBefore"</span> : 1,</div><div class="line">	<span class="string">"numIndexesAfter"</span> : 2,</div><div class="line">	<span class="string">"ok"</span> : 1</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># 插入一条数据</span></div><div class="line">$ db.log.insert(&#123;<span class="string">"time"</span>:new Date()&#125;)</div><div class="line">WriteResult(&#123; <span class="string">"nInserted"</span> : 1 &#125;)</div><div class="line"></div><div class="line"><span class="comment"># 查询</span></div><div class="line">$ db.log.find()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"59c77ee20a61da85ebc8ed0f"</span>), <span class="string">"time"</span> : ISODate(<span class="string">"2017-09-24T09:46:10.359Z"</span>) &#125;</div><div class="line"></div><div class="line"><span class="comment"># 大概一分钟后查询，可看到之前插入的数据已不存在</span></div><div class="line">$ db.log.find()</div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ul>
+<li><p>a. 存储在过期索引字段的值必须是指定的时间类型，必须是ISODate或者ISODate数组，不能使用时间戳，否则不能自动删除。</p>
+<p>  <em>例如：db.log.insert({time:1})这种是不能被自动删除的。</em></p>
+</li>
+<li><p>b. 如果指定了ISODate数组，则按照最小的时间进行删除。</p>
+</li>
+<li><p>c. 过期索引不能是复合索引。因为不能指定两个过期时间。</p>
+</li>
+<li><p>d. 删除时间是不精确的。删除过程是由MongoDB的后台进程每60s跑一次的，而且删除也需要一定时间，所以存在误差。</p>
+</li>
+</ul>
+<h3 id="2-6-设定索引名称"><a href="#2-6-设定索引名称" class="headerlink" title="2.6 设定索引名称"></a>2.6 设定索引名称</h3><p><strong>name：</strong> 索引的名称。如果未指定，MongoDB的通过连接索引的字段名和排序顺序生成一个索引名称。</p>
+<p><em>例：在后台创建索引，并指定索引名称为order_state</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.ensureIndex(&#123;&quot;state&quot;:1&#125;, &#123;background: true, &quot;name&quot;:&quot;order_state&quot;&#125;)</div></pre></td></tr></table></figure>
+<h3 id="2-7-指定以后台方式创建索引"><a href="#2-7-指定以后台方式创建索引" class="headerlink" title="2.7 指定以后台方式创建索引"></a>2.7 指定以后台方式创建索引</h3><p><strong>建索引过程会阻塞其它数据库操作，background可指定以后台方式创建索引，即增加 “background” 可选参数。 “background” 默认值为false。</strong></p>
+<p><em>例：在后台创建索引</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.ensureIndex(&#123;&quot;state&quot;:1&#125;, &#123;background: true&#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="3-强制使用索引"><a href="#3-强制使用索引" class="headerlink" title="3. 强制使用索引"></a>3. 强制使用索引</h2><p><strong>在MongoDB的查询中，如果查询字段中的一个或几个字段已经创建了索引，我们可以使用hint()函数来强制使用索引。hint()在查询中是非常有效的一种优化手段。</strong></p>
+<p><em>例：强制使用索引 {“org_order_id”: 1} 进行查询</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.find(&#123;&quot;org_order_id&quot;: &quot;123&quot;&#125;).hint(&#123;&quot;org_order_id&quot;: 1&#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="4-删除索引"><a href="#4-删除索引" class="headerlink" title="4. 删除索引:"></a>4. 删除索引:</h2><h3 id="4-1-删除单个索引"><a href="#4-1-删除单个索引" class="headerlink" title="4.1 删除单个索引:"></a>4.1 删除单个索引:</h3><p><em>例：删除名为state_1的索引</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.dropIndex(&quot;state_1&quot;)</div></pre></td></tr></table></figure></p>
+<h3 id="4-2-删除集合所有索引"><a href="#4-2-删除集合所有索引" class="headerlink" title="4.2 删除集合所有索引:"></a>4.2 删除集合所有索引:</h3><p><em>例：删除集合order的所有索引</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ db.order.dropIndexes()</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.lonersun.com/2017/10/12/MongoDb索引使用一常用命令/" title="MongoDb索引使用一常用命令" target="_blank" rel="external">https://blog.lonersun.com/2017/10/12/MongoDb索引使用一常用命令/</a>
+    </li>
+    
+
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Lonersun" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Lonersun" target="_blank"><span class="text-dark">Lonersun</span><small class="ml-1x">生命如花，如此灿烂！</small></a></h3>
+        <div>程序员</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU0NS84MTA5">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/10/21/将自己的Python代码打包放到PyPI上/" title="将自己的Python代码打包放到PyPI上"><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning hidden-xs" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  
+  
+  <div class="bar-right">
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+  </div>
+  
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-tit">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="donate-payimg">
+            <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+          </div>
+          <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+          <div class="donate-payselect">
+            <div class="pay_item checked" data-id="alipay" data-src="/images/donate/alipayimg.jpg">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-alipay" value="alipay" checked>
+                <label class="pay_logo clickable" for="input-alipay"><img src="/images/donate/alipay.jpg" alt="支付宝" /></label>
+              </div>
+            </div>
+            <div class="pay_item" data-id="weipay" data-src="/images/donate/weipayimg.jpg">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-weipay" value="weipay">
+                <label class="pay_logo clickable" for="input-weipay"><img src="/images/donate/weipay.jpg" alt="微信支付" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="text-grey">
+            <p>打开<span id="donate-pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Lonersun" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="fa fa-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/anywnangel" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="fa fa-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/Lonersun" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="fa fa-twitter"></i></a></li>
+        
+        <li><a href="https://www.facebook.com/lonersun83" target="_blank" title="Facebook" data-toggle=tooltip data-placement=top><i class="fa fa-facebook"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="fa fa-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2017 Lonersun
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+    <script defer>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?181c709a8c8b86e68f57e9197012ef74";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</body>
+</html>

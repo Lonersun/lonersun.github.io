@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>将自己的Python代码打包放到PyPI上 | Lonersun-生命如花，如此灿烂！</title>
+  <meta name="description" content="Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。 1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=regis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将自己的Python代码打包放到PyPI上">
+<meta property="og:url" content="https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。 1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=regis">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-21T11:37:29.445Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="将自己的Python代码打包放到PyPI上">
+<meta name="twitter:description" content="Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。 1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=regis">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/avatar.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/Lonersun" target="_blank">
+          <img class="thumb-xl img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Lonersun</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">生命如花，如此灿烂！</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="fa fa-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <!-- <span class="ins-close ins-selectable"><i class="fa fa-times"></i></span> -->
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="fa fa-fw fa-dashboard"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="fa fa-fw fa-delicious"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="fa fa-fw fa-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="fa fa-fw fa-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="fa fa-fw fa-code"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="fa fa-fw fa-leanpub"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="fa fa-fw fa-gg"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="fa fa-fw fa-coffee"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Lonersun" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="fa fa-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/anywnangel" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="fa fa-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/Lonersun" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="fa fa-twitter"></i></a></li>
+        
+        <li><a href="https://www.facebook.com/lonersun83" target="_blank" title="Facebook" data-toggle=tooltip data-placement=top><i class="fa fa-facebook"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="fa fa-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            
+            <p>您好，您是第<span id="busuanzi_value_site_uv">0</span>位访客</p>
+            
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+
+    
+      
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2017/10/27/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-10-27T09:26:05.047Z" itemprop="datePublished">2017-10-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2017/10/21/将自己的Python代码打包放到PyPI上/" class="title">将自己的Python代码打包放到PyPI上</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-10-21T11:36:08.000Z" itemprop="datePublished">2017-10-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2017/10/12/MongoDb索引使用一常用命令/" class="title">MongoDb索引使用一常用命令</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-10-12T12:03:07.000Z" itemprop="datePublished">2017-10-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-将自己的Python代码打包放到PyPI上" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      将自己的Python代码打包放到PyPI上
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="fa fa-calendar-check-o"></i>
+	<a href="/2017/10/21/将自己的Python代码打包放到PyPI上/" class="article-date">
+	  <time datetime="2017-10-21T11:36:08.000Z" itemprop="datePublished">2017-10-21</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="fa fa-eye" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			阅读<span id="busuanzi_value_page_pv">0</span>次
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="fa fa-commenting-o"></i> <a href="/2017/10/21/将自己的Python代码打包放到PyPI上/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+      
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p><strong>Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。</strong></p>
+<h5 id="1-首先需要注册一个PyPI账号，注册链接：https-pypi-python-org-pypi-3Aaction-register-form"><a href="#1-首先需要注册一个PyPI账号，注册链接：https-pypi-python-org-pypi-3Aaction-register-form" class="headerlink" title="1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=register_form"></a>1. 首先需要注册一个PyPI账号，注册链接：<a href="https://pypi.python.org/pypi?%3Aaction=register_form" title="https://pypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="external">https://pypi.python.org/pypi?%3Aaction=register_form</a></h5><h5 id="2-安装setuptools（当时版本为36-5-0）"><a href="#2-安装setuptools（当时版本为36-5-0）" class="headerlink" title="2. 安装setuptools（当时版本为36.5.0）"></a>2. 安装setuptools（当时版本为36.5.0）</h5><ul>
+<li>下载ez_setup.py：<a href="https://bootstrap.pypa.io/ez_setup.py" title="https://bootstrap.pypa.io/ez_setup.py" target="_blank" rel="external">https://bootstrap.pypa.io/ez_setup.py</a></li>
+<li>执行 python ez_setup.py</li>
+<li>配置~/.pypirc文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[distutils]</div><div class="line">index-servers =</div><div class="line">pypi</div><div class="line"></div><div class="line">[pypi]</div><div class="line">username:name</div><div class="line">password:password</div></pre></td></tr></table></figure>
+<ul>
+<li>在项目内添加setup.py 并进行配置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup, find_packages</div><div class="line"></div><div class="line">setup(name=<span class="string">'ananas-doc'</span>,    <span class="comment"># 包名称</span></div><div class="line">      version=<span class="string">'1.2.1'</span>,      <span class="comment"># 版本号</span></div><div class="line">      description=<span class="string">u"docs tools"</span>,  <span class="comment"># 描述</span></div><div class="line">      long_description=<span class="string">""</span>,</div><div class="line">      classifiers=[],  <span class="comment"># 参考https://pypi.python.org/pypi?%3Aaction=list_classifiers</span></div><div class="line">      keywords=<span class="string">'docs tools'</span>, <span class="comment"># 关键词</span></div><div class="line">      author=<span class="string">"Lonerusn"</span>, <span class="comment"># 作者</span></div><div class="line">      author_email=<span class="string">"lonersun@126.com"</span>,  <span class="comment"># 邮箱</span></div><div class="line">      url=<span class="string">'https://github.com/Lonersun/ananas-doc'</span>, <span class="comment"># 项目地址</span></div><div class="line">      license=<span class="string">'Apache License 2.0'</span>, <span class="comment"># 协议</span></div><div class="line">      platforms=<span class="string">'any'</span>,</div><div class="line">      packages=find_packages(), <span class="comment"># 要安装的包路径</span></div><div class="line">      zip_safe=<span class="keyword">False</span>, <span class="comment"># 默认是False，这样在每次生成egg包时都会检查项目文件的内容，确保无误。</span></div><div class="line">      include_package_data=<span class="keyword">True</span>, <span class="comment"># 是否加载包以外的文件</span></div><div class="line">      install_requires=[   <span class="comment"># 依赖的包</span></div><div class="line">          <span class="string">'sphinx&gt;=1.6.3'</span>,</div><div class="line">          <span class="string">'sphinx-rtd-theme&gt;=0.2.4'</span>,</div><div class="line">          <span class="string">'m2r&gt;=0.1.12'</span>,</div><div class="line">          <span class="string">'pyaml&gt;=3.12'</span>,</div><div class="line">          <span class="string">'pymongo&gt;=3.5.1'</span>,</div><div class="line">      ],</div><div class="line">      entry_points=&#123;  <span class="comment"># 支持动态发现服务和插件</span></div><div class="line">          <span class="string">'console_scripts'</span>: [</div><div class="line">              <span class="string">'ananas-mkdoc = ananasdoc:main'</span>,</div><div class="line">          ],</div><div class="line">          <span class="string">'gui_scripts'</span>: [</div><div class="line">              <span class="string">'ananas-mkdoc = ananasdoc:main'</span>,</div><div class="line">          ]</div><div class="line">      &#125;,</div><div class="line">)</div></pre></td></tr></table></figure>
+<ul>
+<li>因这个包需要加载一些模版文件，所以在同目录下创建了MANIFEST.in文件，并将引入的内容添加进去</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">include ananasdoc/template/_static/css/*.css</div><div class="line">include ananasdoc/template/_static/images/*.png</div><div class="line">include ananasdoc/template/_static/js/*.js</div><div class="line">include ananasdoc/template/_version/.note</div><div class="line">include ananasdoc/template/_version/.version</div><div class="line">include ananasdoc/template/_version/*.yml</div><div class="line">include ananasdoc/index.rst</div></pre></td></tr></table></figure>
+<h6 id="3-打包上传"><a href="#3-打包上传" class="headerlink" title="3. 打包上传"></a>3. 打包上传</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python setup.py sdist upload</div></pre></td></tr></table></figure>
+<p>上传完成后可以试试效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install 包名</div></pre></td></tr></table></figure>
+<p>setup.py 可参考 <a href="https://github.com/Lonersun/ananas-doc/blob/master/setup.py" target="_blank" rel="external">https://github.com/Lonersun/ananas-doc/blob/master/setup.py</a></p>
+<p>详细介绍：<a href="https://docs.python.org/2/distutils/setupscript.html" target="_blank" rel="external">https://docs.python.org/2/distutils/setupscript.html</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/" title="将自己的Python代码打包放到PyPI上" target="_blank" rel="external">https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/</a>
+    </li>
+    
+
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Lonersun" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Lonersun" target="_blank"><span class="text-dark">Lonersun</span><small class="ml-1x">生命如花，如此灿烂！</small></a></h3>
+        <div>程序员</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU0NS84MTA5">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/10/27/hello-world/" title="Hello World"><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/10/12/MongoDb索引使用一常用命令/" title="MongoDb索引使用一常用命令">下一篇&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning hidden-xs" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  
+  
+  <div class="bar-right">
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+  </div>
+  
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-tit">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="donate-payimg">
+            <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+          </div>
+          <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+          <div class="donate-payselect">
+            <div class="pay_item checked" data-id="alipay" data-src="/images/donate/alipayimg.jpg">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-alipay" value="alipay" checked>
+                <label class="pay_logo clickable" for="input-alipay"><img src="/images/donate/alipay.jpg" alt="支付宝" /></label>
+              </div>
+            </div>
+            <div class="pay_item" data-id="weipay" data-src="/images/donate/weipayimg.jpg">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-weipay" value="weipay">
+                <label class="pay_logo clickable" for="input-weipay"><img src="/images/donate/weipay.jpg" alt="微信支付" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="text-grey">
+            <p>打开<span id="donate-pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Lonersun" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="fa fa-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/anywnangel" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="fa fa-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/Lonersun" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="fa fa-twitter"></i></a></li>
+        
+        <li><a href="https://www.facebook.com/lonersun83" target="_blank" title="Facebook" data-toggle=tooltip data-placement=top><i class="fa fa-facebook"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="fa fa-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2017 Lonersun
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+    <script defer>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?181c709a8c8b86e68f57e9197012ef74";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</body>
+</html>
