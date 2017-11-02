@@ -16,20 +16,20 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>将自己的Python代码打包放到PyPI上 | Lonersun-生命如花，如此灿烂！</title>
-  <meta name="description" content="Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。 1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=regis">
+  <title>Python 虚拟环境(virtualenv)的使用 | Lonersun-生命如花，如此灿烂！</title>
+  <meta name="description" content="在开发 Python 程序的时候，我们会遇到依赖、版本的问题，Virtualenv 创建一个拥有自己安装目录的环境, 这个环境不与其他虚拟环境共享库, 能够方便的管理 Python 版本和管理 Python 库。 安装 1apt-get install python-virtualenv 创建虚拟环境 例如创建名为 test 的虚拟环境 1234➜  ~ virtualenv testNew py">
 <meta property="og:type" content="article">
-<meta property="og:title" content="将自己的Python代码打包放到PyPI上">
-<meta property="og:url" content="https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/index.html">
+<meta property="og:title" content="Python 虚拟环境(virtualenv)的使用">
+<meta property="og:url" content="https://blog.lonersun.com/2017/11/02/virtualenv/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。 1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=regis">
+<meta property="og:description" content="在开发 Python 程序的时候，我们会遇到依赖、版本的问题，Virtualenv 创建一个拥有自己安装目录的环境, 这个环境不与其他虚拟环境共享库, 能够方便的管理 Python 版本和管理 Python 库。 安装 1apt-get install python-virtualenv 创建虚拟环境 例如创建名为 test 的虚拟环境 1234➜  ~ virtualenv testNew py">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-21T11:37:29.445Z">
+<meta property="og:updated_time" content="2017-11-02T09:50:00.618Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="将自己的Python代码打包放到PyPI上">
-<meta name="twitter:description" content="Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。 1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=regis">
+<meta name="twitter:title" content="Python 虚拟环境(virtualenv)的使用">
+<meta name="twitter:description" content="在开发 Python 程序的时候，我们会遇到依赖、版本的问题，Virtualenv 创建一个拥有自己安装目录的环境, 这个环境不与其他虚拟环境共享库, 能够方便的管理 Python 版本和管理 Python 库。 安装 1apt-get install python-virtualenv 创建虚拟环境 例如创建名为 test 的虚拟环境 1234➜  ~ virtualenv testNew py">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/index.html">
+  <link rel="canonical" href="https://blog.lonersun.com/2017/11/02/virtualenv/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -337,14 +337,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-将自己的Python代码打包放到PyPI上" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-virtualenv" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      将自己的Python代码打包放到PyPI上
+      Python 虚拟环境(virtualenv)的使用
     </h1>
   
 
@@ -352,8 +352,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="fa fa-calendar-check-o"></i>
-	<a href="/2017/10/21/将自己的Python代码打包放到PyPI上/" class="article-date">
-	  <time datetime="2017-10-21T11:36:08.000Z" itemprop="datePublished">2017-10-21</time>
+	<a href="/2017/11/02/virtualenv/" class="article-date">
+	  <time datetime="2017-11-02T09:44:42.000Z" itemprop="datePublished">2017-11-02</time>
 	</a>
 </span>
         
@@ -368,33 +368,65 @@
 	</span>
 
 
-        <span class="post-comment"><i class="fa fa-commenting-o"></i> <a href="/2017/10/21/将自己的Python代码打包放到PyPI上/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="fa fa-commenting-o"></i> <a href="/2017/11/02/virtualenv/#comments" class="article-comment-link">评论</a></span>
         
       </div>
       
     </div>
     <div class="article-entry markdown-body" itemprop="articleBody">
       
-        <p><strong>Pip 是Python常用的包管理工具，那么怎样将自己开发的包上传到PyPI源供他人使用呢？之前做过一个基于Sphinx、MarkDown生成文档的脚本docs.lonersun.com 最近稍作整理，为提高使用体验决定将其提交到PyPI源，以此文档作为使用总结。</strong></p>
-<h5 id="1-首先需要注册一个PyPI账号，注册链接：https-pypi-python-org-pypi-3Aaction-register-form"><a href="#1-首先需要注册一个PyPI账号，注册链接：https-pypi-python-org-pypi-3Aaction-register-form" class="headerlink" title="1. 首先需要注册一个PyPI账号，注册链接：https://pypi.python.org/pypi?%3Aaction=register_form"></a>1. 首先需要注册一个PyPI账号，注册链接：<a href="https://pypi.python.org/pypi?%3Aaction=register_form" title="https://pypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="external">https://pypi.python.org/pypi?%3Aaction=register_form</a></h5><h5 id="2-安装setuptools（当时版本为36-5-0）"><a href="#2-安装setuptools（当时版本为36-5-0）" class="headerlink" title="2. 安装setuptools（当时版本为36.5.0）"></a>2. 安装setuptools（当时版本为36.5.0）</h5><ul>
-<li>下载ez_setup.py：<a href="https://bootstrap.pypa.io/ez_setup.py" title="https://bootstrap.pypa.io/ez_setup.py" target="_blank" rel="external">https://bootstrap.pypa.io/ez_setup.py</a></li>
-<li>执行 python ez_setup.py</li>
-<li>配置~/.pypirc文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[distutils]</div><div class="line">index-servers =</div><div class="line">pypi</div><div class="line"></div><div class="line">[pypi]</div><div class="line">username:name</div><div class="line">password:password</div></pre></td></tr></table></figure>
-<ul>
-<li>在项目内添加setup.py 并进行配置</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup, find_packages</div><div class="line"></div><div class="line">setup(name=<span class="string">'ananas-doc'</span>,    <span class="comment"># 包名称</span></div><div class="line">      version=<span class="string">'1.2.1'</span>,      <span class="comment"># 版本号</span></div><div class="line">      description=<span class="string">u"docs tools"</span>,  <span class="comment"># 描述</span></div><div class="line">      long_description=<span class="string">""</span>,</div><div class="line">      classifiers=[],  <span class="comment"># 参考https://pypi.python.org/pypi?%3Aaction=list_classifiers</span></div><div class="line">      keywords=<span class="string">'docs tools'</span>, <span class="comment"># 关键词</span></div><div class="line">      author=<span class="string">"Lonerusn"</span>, <span class="comment"># 作者</span></div><div class="line">      author_email=<span class="string">"lonersun@126.com"</span>,  <span class="comment"># 邮箱</span></div><div class="line">      url=<span class="string">'https://github.com/Lonersun/ananas-doc'</span>, <span class="comment"># 项目地址</span></div><div class="line">      license=<span class="string">'Apache License 2.0'</span>, <span class="comment"># 协议</span></div><div class="line">      platforms=<span class="string">'any'</span>,</div><div class="line">      packages=find_packages(), <span class="comment"># 要安装的包路径</span></div><div class="line">      zip_safe=<span class="keyword">False</span>, <span class="comment"># 默认是False，这样在每次生成egg包时都会检查项目文件的内容，确保无误。</span></div><div class="line">      include_package_data=<span class="keyword">True</span>, <span class="comment"># 是否加载包以外的文件</span></div><div class="line">      install_requires=[   <span class="comment"># 依赖的包</span></div><div class="line">          <span class="string">'sphinx&gt;=1.6.3'</span>,</div><div class="line">          <span class="string">'sphinx-rtd-theme&gt;=0.2.4'</span>,</div><div class="line">          <span class="string">'m2r&gt;=0.1.12'</span>,</div><div class="line">          <span class="string">'pyaml&gt;=3.12'</span>,</div><div class="line">          <span class="string">'pymongo&gt;=3.5.1'</span>,</div><div class="line">      ],</div><div class="line">      entry_points=&#123;  <span class="comment"># 支持动态发现服务和插件</span></div><div class="line">          <span class="string">'console_scripts'</span>: [</div><div class="line">              <span class="string">'ananas-mkdoc = ananasdoc:main'</span>,</div><div class="line">          ],</div><div class="line">          <span class="string">'gui_scripts'</span>: [</div><div class="line">              <span class="string">'ananas-mkdoc = ananasdoc:main'</span>,</div><div class="line">          ]</div><div class="line">      &#125;,</div><div class="line">)</div></pre></td></tr></table></figure>
-<ul>
-<li>因这个包需要加载一些模版文件，所以在同目录下创建了MANIFEST.in文件，并将引入的内容添加进去</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">include ananasdoc/template/_static/css/*.css</div><div class="line">include ananasdoc/template/_static/images/*.png</div><div class="line">include ananasdoc/template/_static/js/*.js</div><div class="line">include ananasdoc/template/_version/.note</div><div class="line">include ananasdoc/template/_version/.version</div><div class="line">include ananasdoc/template/_version/*.yml</div><div class="line">include ananasdoc/index.rst</div></pre></td></tr></table></figure>
-<h6 id="3-打包上传"><a href="#3-打包上传" class="headerlink" title="3. 打包上传"></a>3. 打包上传</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python setup.py sdist upload</div></pre></td></tr></table></figure>
-<p>上传完成后可以试试效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install 包名</div></pre></td></tr></table></figure>
-<p>setup.py 可参考 <a href="https://github.com/Lonersun/ananas-doc/blob/master/setup.py" target="_blank" rel="external">https://github.com/Lonersun/ananas-doc/blob/master/setup.py</a></p>
-<p>详细介绍：<a href="https://docs.python.org/2/distutils/setupscript.html" target="_blank" rel="external">https://docs.python.org/2/distutils/setupscript.html</a></p>
+        <p>在开发 Python 程序的时候，我们会遇到依赖、版本的问题，Virtualenv 创建一个拥有自己安装目录的环境, 这个环境不与其他虚拟环境共享库, 能够方便的管理 Python 版本和管理 Python 库。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install python-virtualenv</div></pre></td></tr></table></figure>
+<p><strong>创建虚拟环境</strong></p>
+<p>例如创建名为 test 的虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜  ~ virtualenv test</div><div class="line">New python executable in /Users/Lonersun/test/bin/python</div><div class="line">Installing setuptools, pip, wheel...done.</div><div class="line">➜  ~</div></pre></td></tr></table></figure>
+<p>默认情况下，虚拟环境会依赖系统环境中的site packages，就是说系统中已经安装好的第三方package也会安装在虚拟环境中，如果不想依赖这些package，那么可以加上参数 –no-site-packages建立虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">virtualenv --no-site-packages [虚拟环境名称]</div></pre></td></tr></table></figure>
+<p><strong>进入虚拟环境</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜ cd test</div><div class="line">➜ source ./bin/activate</div><div class="line">(test) ➜  test</div></pre></td></tr></table></figure>
+<p>注意此时命令行会多一个(test)，test为虚拟环境名称，接下来所有模块都只会安装到该目录中去。</p>
+<p><strong>退出虚拟环境</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(test) ➜ deactivate</div><div class="line">➜</div></pre></td></tr></table></figure>
+<p><strong>在虚拟环境安装 Python 包</strong></p>
+<p>Virtualenv 附带有 Pip 安装工具，因此需要安装的包可以直接运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install [包名称]</div></pre></td></tr></table></figure>
+<p>如果没有启动虚拟环境，系统也安装了 Pip 工具，那么包将被安装在系统环境中，为了避免发生此事，可以在 ~/.bashrc 文件中加上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export PIP_REQUIRE_VIRTUALENV=true</div></pre></td></tr></table></figure>
+<p>或者让在执行 Pip 的时候让系统自动开启虚拟环境：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export PIP_RESPECT_VIRTUALENV=true</div></pre></td></tr></table></figure>
+<p><strong>Virtualenvwrapper</strong></p>
+<p>virtualenv 有一个缺点就是，每次开启虚拟环境之前要去虚拟环境所在目录下的 bin 目录下 source 一下 activate，这就需要我们记住每个虚拟环境所在的目录。</p>
+<p>一种可行的解决方案是，将所有的虚拟环境目录全都集中起来，比如放到 ~/virtualenvs/，并对不同的虚拟环境使用不同的目录来管理。Virtualenvwrapper 正是这样做的。并且，它还省去了每次开启虚拟环境时候的 source 操作，使得虚拟环境更加好用。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo easy_install virtualenvwrapper</div></pre></td></tr></table></figure>
+<p>此时还不能使用 virtualenvwrapper ，默认 virtualenvwrapper 安装在 /usr/local/bin 下面，实际上需要运行 virtualenvwrapper.sh 文件才行，打开这个文件看看,里面有安装步骤，照着操作把环境设置好。</p>
+<ol>
+<li>创建目录用来存放虚拟环境</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir $HOME/.virtualenvs</div></pre></td></tr></table></figure>
+<ol>
+<li>在 ~/.bashrc 中添加行(如果使用 zsh，则添加到 ~/.zshrc 中。)：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export WORKON_HOME=$HOME/.virtualenvs</div><div class="line">source /usr/bin/virtualenvwrapper.sh</div></pre></td></tr></table></figure>
+<ol>
+<li>运行：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.bashrc</div></pre></td></tr></table></figure>
+<p>此时 virtualenvwrapper 就可以使用了。</p>
+<p><strong>常用命令</strong></p>
+<p>列出虚拟环境列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">workon</div></pre></td></tr></table></figure>
+<p>也可以使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsvirtualenv</div></pre></td></tr></table></figure>
+<p>新建虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkvirtualenv [虚拟环境名称]</div></pre></td></tr></table></figure>
+<p>启动/切换虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">workon [虚拟环境名称]</div></pre></td></tr></table></figure>
+<p>删除虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rmvirtualenv [虚拟环境名称]</div></pre></td></tr></table></figure>
+<p>离开虚拟环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">deactivate</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -404,7 +436,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/" title="将自己的Python代码打包放到PyPI上" target="_blank" rel="external">https://blog.lonersun.com/2017/10/21/将自己的Python代码打包放到PyPI上/</a>
+      <a href="https://blog.lonersun.com/2017/11/02/virtualenv/" title="Python 虚拟环境(virtualenv)的使用" target="_blank" rel="external">https://blog.lonersun.com/2017/11/02/virtualenv/</a>
     </li>
     
 
@@ -452,13 +484,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2017/10/27/hello-world/" title="Hello World"><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2017/10/12/MongoDb索引使用一常用命令/" title="MongoDb索引使用一常用命令">下一篇&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+      <a href="/2017/10/30/github/" title="github">下一篇&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
     </li>
     
   </ul>
