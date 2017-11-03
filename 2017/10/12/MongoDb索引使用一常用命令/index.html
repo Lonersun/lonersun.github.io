@@ -18,13 +18,14 @@
   
   <title>MongoDb索引使用一常用命令 | Lonersun-生命如花，如此灿烂！</title>
   <meta name="description" content="本文将以集合order为例，列举常用的索引命令。 1. 查看索引：1.1 查看集合中的索引：1$ db.COLLECTION_NAME.getIndexes() 例：获取集合order的索引: 123456789101112$ db.order.getIndexes()[	&amp;#123;		&quot;v&quot; : 1,		&quot;key&quot; : &amp;#123;			&quot;_id&quot; : 1		&amp;#125;,		&quot;name&quot; :">
+<meta name="keywords" content="Mongo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDb索引使用一常用命令">
 <meta property="og:url" content="https://blog.lonersun.com/2017/10/12/MongoDb索引使用一常用命令/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="本文将以集合order为例，列举常用的索引命令。 1. 查看索引：1.1 查看集合中的索引：1$ db.COLLECTION_NAME.getIndexes() 例：获取集合order的索引: 123456789101112$ db.order.getIndexes()[	&amp;#123;		&quot;v&quot; : 1,		&quot;key&quot; : &amp;#123;			&quot;_id&quot; : 1		&amp;#125;,		&quot;name&quot; :">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-21T11:34:15.870Z">
+<meta property="og:updated_time" content="2017-11-02T10:08:38.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDb索引使用一常用命令">
 <meta name="twitter:description" content="本文将以集合order为例，列举常用的索引命令。 1. 查看索引：1.1 查看集合中的索引：1$ db.COLLECTION_NAME.getIndexes() 例：获取集合order的索引: 123456789101112$ db.order.getIndexes()[	&amp;#123;		&quot;v&quot; : 1,		&quot;key&quot; : &amp;#123;			&quot;_id&quot; : 1		&amp;#125;,		&quot;name&quot; :">
@@ -226,18 +227,39 @@
 
     
       
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hello-World/">Hello World</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
 
     
       
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-World/">Hello World</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongo/">Mongo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pypi/">pypi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualenv/">virtualenv</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
 
     
       
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Hello-World/" style="font-size: 13px;">Hello World</a> <a href="/tags/Mongo/" style="font-size: 13px;">Mongo</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/pypi/" style="font-size: 13px;">pypi</a> <a href="/tags/virtualenv/" style="font-size: 13px;">virtualenv</a>
+    </div>
+  </div>
+
     
       
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -253,7 +275,22 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/Hello-World/">Hello World</a>
+              </p>
+              <p class="item-title">
+                <a href="/2017/11/02/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-11-02T10:11:30.836Z" itemprop="datePublished">2017-11-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
               </p>
               <p class="item-title">
                 <a href="/2017/11/02/virtualenv/" class="title">Python 虚拟环境(virtualenv)的使用</a>
@@ -268,7 +305,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/工具/">工具</a>
               </p>
               <p class="item-title">
                 <a href="/2017/10/30/github/" class="title">github</a>
@@ -283,22 +320,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2017/10/27/hello-world/" class="title">Hello World</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2017-10-27T09:26:05.047Z" itemprop="datePublished">2017-10-27</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
+                <a class="category-link" href="/categories/Python/">Python</a>
               </p>
               <p class="item-title">
                 <a href="/2017/10/21/将自己的Python代码打包放到PyPI上/" class="title">将自己的Python代码打包放到PyPI上</a>
@@ -313,7 +335,7 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/数据库/">数据库</a>
               </p>
               <p class="item-title">
                 <a href="/2017/10/12/MongoDb索引使用一常用命令/" class="title">MongoDb索引使用一常用命令</a>
@@ -335,6 +357,15 @@
 
   
   
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-查看索引："><span class="toc-number">1.</span> <span class="toc-text">1. 查看索引：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-查看集合中的索引："><span class="toc-number">1.1.</span> <span class="toc-text">1.1 查看集合中的索引：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-查看集合中的索引大小"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 查看集合中的索引大小:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-创建索引："><span class="toc-number">2.</span> <span class="toc-text">2. 创建索引：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-普通索引"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 普通索引:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-复合索引："><span class="toc-number">2.2.</span> <span class="toc-text">2.2 复合索引：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-文档索引："><span class="toc-number">2.3.</span> <span class="toc-text">2.3 文档索引：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-唯一索引"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 唯一索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-过期索引"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 过期索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-设定索引名称"><span class="toc-number">2.6.</span> <span class="toc-text">2.6 设定索引名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-指定以后台方式创建索引"><span class="toc-number">2.7.</span> <span class="toc-text">2.7 指定以后台方式创建索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-强制使用索引"><span class="toc-number">3.</span> <span class="toc-text">3. 强制使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-删除索引"><span class="toc-number">4.</span> <span class="toc-text">4. 删除索引:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-删除单个索引"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 删除单个索引:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-删除集合所有索引"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 删除集合所有索引:</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
 <main class="main" role="main">
   <div class="content">
   <article id="post-MongoDb索引使用一常用命令" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -357,7 +388,17 @@
 	</a>
 </span>
         
+  <span class="article-category">
+    <i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </span>
+
         
+  <span class="article-tag">
+    <i class="fa fa-tag"></i>
+	<a class="article-tag-link" href="/tags/Mongo/">Mongo</a>
+  </span>
+
 
         
 	<span class="article-read hidden-xs">
@@ -370,6 +411,13 @@
 
         <span class="post-comment"><i class="fa fa-commenting-o"></i> <a href="/2017/10/12/MongoDb索引使用一常用命令/#comments" class="article-comment-link">评论</a></span>
         
+      </div>
+      
+      <div class="toggle-toc hidden-xs" data-stick-top>
+        <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+          <i class="text-collapsed fa fa-anchor"></i>
+          <i class="text-in fa fa-close"></i>
+        </a>
       </div>
       
     </div>
